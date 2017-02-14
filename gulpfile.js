@@ -13,7 +13,7 @@ var source = require('vinyl-source-stream'),
 	uglify = require('gulp-uglify');
 
 //----- Config -----//
-var build = './build/',
+var build = './',
 	src = './src/';
 
 // SASS
@@ -57,7 +57,7 @@ gulp.task('bundle-js', function() {
 gulp.task('watch', function() {
 	browserSync.init({
 		server: {
-			baseDir: build
+			baseDir: './'
 		},
 		port: 5000
 	});
