@@ -1,0 +1,43 @@
+mixin content
+	.content
+		.sections-wrap
+			.section(id="section-0" data-section="section-0" style="background:#FAFAFA")
+				.usage
+					.usage__inner
+						h3 Usage
+						code.js
+							span.keyword import 
+							| NavScrollSpy 
+							span.keyword from 
+							span.string './nav-scroll-spy.js';
+							br
+							span.keyword let 
+							|spy = 
+							span.keyword new 
+							| NavScrollSpy();
+							br
+							| spy.init();
+				.tip Scroll down to see how it work
+			.section(id="section-1" data-section="section-1" style="background:#EF6C00")
+				h3.section__title Section 1
+			.section(id="section-2" data-section="section-2" style="background:#D81B60")
+				h3.section__title Section 2
+				.section--sub(id="section-2-1")
+					h4.section__title--sub Section 2-1
+					p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores quasi veniam. Blanditiis illo cupiditate nostrum eligendi, placeat quo expedita autem beatae corporis. Optio ex odio, sed deserunt magnam fugit.
+				.section--sub(id="section-2-2")
+					h4.section__title--sub Section 2-2
+					p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores quasi veniam. Blanditiis illo cupiditate nostrum eligendi, placeat quo expedita autem beatae corporis. Optio ex odio, sed deserunt magnam fugit.
+				.section--sub(id="section-2-3")
+					h4.section__title--sub Section 2-3
+					p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores quasi veniam. Blanditiis illo cupiditate nostrum eligendi, placeat quo expedita autem beatae corporis. Optio ex odio, sed deserunt magnam fugit.
+			.section(id="section-3" data-section="section-3" style="background:#8E24AA")
+				h3.section__title Section 3
+			.section(style="background:#666666")
+				h3.section__title Section between
+			.section(id="section-4" data-section="section-4" style="background:#5E35B1")
+				h3.section__title Section 4
+			.section(id="section-5" data-section="section-5" style="background:#1E88E5")
+				h3.section__title Section 5
+			.section(id="section-6" data-section="section-6" style="background:#C0CA33")
+				h3.section__title Section without link 

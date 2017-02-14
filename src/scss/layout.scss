@@ -1,0 +1,205 @@
+//------ Layout ------//
+
+body, html {
+	font-size: 16px;
+	line-height: 1.5;
+	font-family: 'Inconsolata', monospace;
+	background: #eee;
+}
+
+body, html, .site-container, .content, .sections-wrap {
+	min-height: 100%;
+	height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 700;
+	margin: 0 0 1.5em;
+}
+
+a {
+	color: #fff;
+}
+
+.wrap {
+	padding: 0 40px;
+	margin: 0 auto;
+}
+
+// Header
+.header {
+	position: fixed;
+	width: 240px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	background: #333;
+	z-index: 9999;
+	.wrap {
+		width: auto;
+		padding: 0;
+	}
+}
+
+// Logo
+.logo {
+	margin: 0;
+	color: #fff;
+	font-size: 16px;
+	line-height: 120px;
+	text-align: center;
+	border-bottom: 1px solid #222;
+}
+
+// Nav
+.nav {
+	font-size: 1rem;
+	.menu { 
+		list-style: none;
+		display: block;
+		li {
+			position: relative;
+			margin: 0;
+			padding: 10px 20px;
+			display: block;
+			a {
+				display: block;
+				line-height: 40px;
+				text-decoration: none;
+			}
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+		&--sub.menu {
+			padding-left: 20px;
+			font-size: 0.9rem;
+			li {
+				&:before {
+					top: 50%;
+					bottom: auto;
+					width: 6px;
+					height: 6px;
+					margin-top: -3px;
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+	& > .menu {
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		& > li {
+			border-bottom: 1px solid #222;
+		}
+		li {
+			&:before {
+				position: absolute;
+				content: '';
+				display: block;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				width: 3px;
+				background: #fff;
+				opacity: 0;
+				transition: .3s;
+			}
+			&.active {
+				background: #222;
+				&:before {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+
+.content {
+	position: relative;
+	margin-left: 240px;
+}
+
+.sections-wrap {
+	position: relative;
+}
+
+.section {
+	position: relative;
+	height: 100%;
+	&__title {
+		display: inline-block;
+		color: rgba(0,0,0, 0.3);
+		position: absolute;
+		top: 50%;
+		margin: 0 0 0 10%;
+		padding: 20px;
+		transform: translate(-50%, -50%) rotate(-90deg);
+		font-size: 32px;
+		text-align: center;
+	}
+	&:nth-child(2){
+		height: 70%;
+	}
+	&:nth-child(3){
+		height: auto;
+		padding: 160px 0;
+	}
+	&--sub {
+		max-width: 400px;
+		margin: 0 auto;
+		padding: 60px 0;
+	}
+
+}
+
+.usage {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	padding: 60px;
+	transform: translateY(-65%);
+	z-index: 1;
+	&__inner {
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 40px;
+		background: #fff;
+		box-shadow: 0 40px 65px rgba(0,0,0, 0.18);
+	}
+}
+
+code {
+	display: block;
+	font-family: 'Inconsolata', monospace;
+}
+
+// Code HL
+.string {
+	color: #50a14f;
+}
+.keyword {
+	color: #a626a4;
+}
+
+.tip {
+	position: absolute;
+	bottom: 90px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	color: rgba(0,0,0, 0.25);
+	font-size: 20px;
+}
+
+.ad-link {
+	margin-top: 40px;
+	padding: 0 20px;
+	font-size: 0.8rem;
+	color: #999;
+}
+
+
