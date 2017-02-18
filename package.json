@@ -1,12 +1,12 @@
 {
-  "name": "vanilla-scroll-spy",
+  "name": "nav-scroll-spy",
   "version": "1.0.0",
-  "description": "Simple ES6 Scroll Spy Class",
-  "main": "./src/js/vanilla-scroll-spy.js",
+  "description": "Simple Scroll Spy Class",
+  "main": "./src/js/nav-scroll-spy.js",
   "author": "Vadim Petrov – github.com/komock",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Komock/vanilla-scroll-spy.git"
+    "url": "https://github.com/komock/nav-scroll-spy.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -21,7 +21,8 @@
     "gulp-pug": "^3.2.0",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.0.1",
-    "scroll-window-to-element": "^1.0.1",
+    "scroll-window-to-element": "^1.0.3",
+    "stream-combiner2": "^1.1.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0"

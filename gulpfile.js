@@ -10,6 +10,8 @@ var source = require('vinyl-source-stream'),
 	browserify = require('browserify'),
 	babelify = require('babelify'),
 	pug = require('gulp-pug'),
+	combiner = require('stream-combiner2'),
+	babelMinify = require('gulp-babel-minify'),
 	uglify = require('gulp-uglify');
 
 //----- Config -----//
@@ -43,14 +45,23 @@ gulp.task('pug', function() {
 
 
 gulp.task('bundle-js', function() {
-	return browserify(src + 'js/demo.js')
-		.transform('babelify', { presets: ['es2015', 'react'] })
-		.bundle()
-		.pipe(source('bundle.min.js'))
-		.pipe(buffer())
-		// .pipe(uglify())
-		.pipe(gulp.dest(build + 'js/'))
-		.pipe(browserSync.stream());
+	// return browserify(src + 'js/demo.js')
+	// 	.transform('babelify', { presets: ['es2015', 'stage-1'] })
+	// 	.bundle()
+	// 	.pipe(source('bundle.min.js'))
+	// 	.pipe(buffer())
+	// 	.pipe(uglify())
+	// 	.pipe(gulp.dest(build + 'js/'))
+	// 	.pipe(browserSync.stream());
+
+	return combiner(
+		browserify(src + 'js/demo.js').transform('babelify', { presets: ['es2015', 'stage-1'] }).bundle(),
+		source('bundle.min.js'),
+		buffer(),
+		uglify(),
+		gulp.dest(build + 'js/'),
+		browserSync.stream()
+		).on('error', console.error.bind(console));
 });
 
 // Watch

@@ -6,11 +6,12 @@ export default class NavScrollSpy {
 			offset: 0,
 			currentClass: 'active',
 			selector: 'nav a',
-			throttle: 50
+			throttle: 100
 		};
 		options ? this.options = Object.assign(defaults, options) : this.options = defaults;
 
-		this.prevNavItems = [];
+		this.prevCurrentSections = [];
+		this.navItems = {};
 	}
 
 	elOffsetTop(el) {
@@ -24,93 +25,106 @@ export default class NavScrollSpy {
 		} catch (err) { //#####################=> TODO
 			console.warn('Section missing!', err);
 		}
-		
+
 	}
 
 	getElements() {
 		// Nav Items
-		this.navItems = document.querySelectorAll(this.options.selector);
+		let navItemsNodeList = document.querySelectorAll(this.options.selector);
+		// Store nav items in object with hash-keys
+		for (let item of navItemsNodeList) {
+			this.navItems[item.hash] = item;
+		}
 
 		// Store Sections
 		this.sections = [];
-		for (let item of this.navItems ) {
-			let link = item.getAttribute('href');
-			
-			let section = document.querySelector(link) || document.querySelector(`*[data-section="${link.substr(1)}"]`);
+		for (let key in this.navItems) {
+			let section = document.querySelector(key);
 			this.sections.push(section);
 		}
-		this.sectionsLength = this.sections.length;
 	}
 
-	getSectionsBoundaries() {
-		this.sectionsBoundaries = [];
+	getSectionsParams() {
+		this.sectionsParams = [];
 		this.sections.forEach((item, i) => {
 			let top = this.elOffsetTop(item);
-			this.sectionsBoundaries.push({ top: top, bottom: top + item.offsetHeight, index: i });
+			this.sectionsParams.push({ top: top, bottom: top + item.offsetHeight, id: '#' + item.id });
 		});
-		this.lowerBound = this.sectionsBoundaries[this.sectionsLength - 1].bottom;
 	}
 
 	setCurentMenuItems(sectionsInScreen) {
-		// No items for cleaning and new available
-		if( this.prevNavItems.length === 0 && sectionsInScreen.length !== 0 ){
-			for( let key in sectionsInScreen ){
-				this.navItems[key].parentNode.classList.add(this.options.currentClass);
+		// prevCurrentSections not available
+		if (this.prevCurrentSections.length === 0) {
+			// No items for cleaning and no new available
+			if (sectionsInScreen.length === 0) {
+				return;
+			}
+			// No items for cleaning and new available
+			else {
+				for (const key in sectionsInScreen) {
+					let id = sectionsInScreen[key].id;
+					this.navItems[id].parentNode.classList.add(this.options.currentClass);
+				}
 			}
 		}
-		// Available prevNavItems and new available
-		if( this.prevNavItems.length !== 0 && sectionsInScreen.length !== 0 ){
-			this.navItems.forEach((item, i)=>{
-				// Remove current class
-				if( this.prevNavItems[i] && !sectionsInScreen[i] ){
-					item.parentNode.classList.remove(this.options.currentClass);
+		// prevCurrentSections available
+		else {
+			// Available prevNavItems and new not available. Remove old. ( this.prevCurrentSections.length !== 0 && sectionsInScreen.length === 0 )
+			if (sectionsInScreen.length === 0) {
+				for (const key in this.prevCurrentSections) {
+					let id = this.prevCurrentSections[key].id;
+					this.navItems[id].parentNode.classList.remove(this.options.currentClass);
 				}
-				// Add current class
-				if( !this.prevNavItems[i] && sectionsInScreen[i] ){
-					item.parentNode.classList.add(this.options.currentClass);
-				}
-				// Else available in both arrays and already have class
-			});
-		}
-		// Available prevNavItems and new not available. Remove old
-		if( this.prevNavItems.length !== 0 && sectionsInScreen.length === 0 ){
-			for( let key in this.prevNavItems ){
-				this.navItems[key].parentNode.classList.remove(this.options.currentClass);
 			}
+			// Available prevNavItems and new available, compare they
+			else {
+				Object.keys(this.navItems).forEach((key, i) => {
+					// Remove current class
+					if (this.prevCurrentSections[i] && !sectionsInScreen[i]) {
+						this.navItems[key].parentNode.classList.remove(this.options.currentClass);
+					}
+					// Add current class
+					if (!this.prevCurrentSections[i] && sectionsInScreen[i]) {
+						this.navItems[key].parentNode.classList.add(this.options.currentClass);
+					}
+					// Else available in both arrays and already have current class
+				});
+
+			}
+
 		}
 
 		// Store current sections
-		this.prevNavItems = sectionsInScreen;
+		this.prevCurrentSections = sectionsInScreen;
 	}
 
 	defineCurrentSection() {
 		let winScrollPos = window.pageYOffset + this.options.offset;
 		let sectionsInScreen = [];
-		this.sectionsBoundaries.forEach((position, i)=> {
-			if (winScrollPos > position.top && winScrollPos < position.bottom ) sectionsInScreen[i] = position;
+		this.sectionsParams.forEach((section, i) => {
+			if (winScrollPos > section.top && winScrollPos < section.bottom) sectionsInScreen[i] = section;
 		});
-	
 		this.setCurentMenuItems(sectionsInScreen);
 	}
 
 	setEvents() {
 		// Throttling to improve performance
-		let throttledDefineCurrentSection = throttle( this.defineCurrentSection, this.options.throttle ).bind(this),
-			throttledGetSectionsBoundaries = throttle( this.getSectionsBoundaries, this.options.throttle ).bind(this);
+		let throttledDefineCurrentSection = throttle(this.defineCurrentSection, this.options.throttle).bind(this),
+			throttledGetSectionsParams = throttle(this.getSectionsParams, this.options.throttle).bind(this);
 
 		// Scroll
-		window.addEventListener('scroll', ()=> throttledDefineCurrentSection() );
+		window.addEventListener('scroll', () => throttledDefineCurrentSection());
 
 		// Resize
 		window.addEventListener('resize', () => {
-			throttledGetSectionsBoundaries();
+			throttledGetSectionsParams();
 			throttledDefineCurrentSection();
 		});
 	}
 
 	init() {
 		this.getElements();
-		this.getSectionsBoundaries();
+		this.getSectionsParams();
 		this.setEvents();
 	}
 

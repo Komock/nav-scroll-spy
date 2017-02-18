@@ -1,16 +1,15 @@
 import ScrollToElement from 'scroll-window-to-element';
 import NavScrollSpy from './nav-scroll-spy';
 
-let HalfWindowHeight = window.innerHeight / 2;
+let quarterWindowHeight = window.innerHeight / 4;
 let spy = new NavScrollSpy({
-	offset: HalfWindowHeight
+	offset: quarterWindowHeight
 });
 spy.init();
 
 
 // Smooth scroll to element
 let scroll = new ScrollToElement({
-    anchors: '.nav a',
-    offset: HalfWindowHeight / 2
+    anchors: '.nav a'
 });
 scroll.init();
