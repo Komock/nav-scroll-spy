@@ -1,6 +1,6 @@
 {
   "name": "nav-scroll-spy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple Scroll Spy Class",
   "main": "./src/js/nav-scroll-spy.js",
   "author": "Vadim Petrov – github.com/komock",
