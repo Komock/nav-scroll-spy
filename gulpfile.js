@@ -9,6 +9,7 @@ var source = require('vinyl-source-stream'),
 	browserSync = require('browser-sync').create(),
 	browserify = require('browserify'),
 	babelify = require('babelify'),
+	babel = require('gulp-babel'),
 	pug = require('gulp-pug'),
 	uglify = require('gulp-uglify');
 
@@ -41,14 +42,24 @@ gulp.task('pug', function() {
 		.pipe(browserSync.stream());
 });
 
+// Lib folder with module
+gulp.task('bundle-js', () => {
+    return gulp.src([src + 'js/nav-scroll-spy.js', src + 'js/throttle.js'])
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest('./lib'))
+        .pipe(browserSync.stream());
+});
 
-gulp.task('bundle-js', function() {
+// Demo
+gulp.task('demo-js', function() {
 	return browserify(src + 'js/demo.js')
 		.transform('babelify', { presets: ['es2015', 'stage-1'] })
 		.bundle()
 		.pipe(source('bundle.min.js'))
 		.pipe(buffer())
-		// .pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest(build + 'js/'))
 		.pipe(browserSync.stream());
 });
@@ -63,8 +74,8 @@ gulp.task('watch', function() {
 	});
 	gulp.watch(src + 'scss/*.scss', gulp.series('sass'));
 	gulp.watch([src + 'pug/**/*.pug', src + 'pug/includes/*.pug'], gulp.series('pug'));
-	gulp.watch(src + 'js/**/*.js', gulp.series('bundle-js'));
+	gulp.watch(src + 'js/**/*.js', gulp.series('demo-js'));
 });
 
 // default
-gulp.task('default', gulp.series(gulp.parallel('pug', 'sass', 'bundle-js'), 'watch'));
+gulp.task('default', gulp.series(gulp.parallel('pug', 'sass', 'bundle-js', 'demo-js'), 'watch'));

@@ -5,7 +5,7 @@ export default class NavScrollSpy {
 		let defaults = {
 			offset: 0,
 			currentClass: 'active',
-			selector: 'nav a',
+			selector: 'nav a[href*="#"]',
 			throttle: 100
 		};
 		options ? this.options = Object.assign(defaults, options) : this.options = defaults;

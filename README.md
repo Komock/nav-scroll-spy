@@ -30,7 +30,7 @@ spy.init();
 | ------ | ---- | ------- | ----------- |
 | offset | number | 0 | Scroll offset |
 | currentClass | string | 'active' | Element class for current navigation item (or items). Class will be applied to link parent. |
-| selector | string (html) | 'nav a' | Selector for navigation links |
+| selector | string (html) | 'nav a[href*="#"]' | Selector for navigation links |
 | throttle | number | 100 | Throttling window events (scroll and resize) to improve performance |
 
 ## Features

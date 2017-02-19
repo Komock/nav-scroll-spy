@@ -1,8 +1,8 @@
 {
   "name": "nav-scroll-spy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple Scroll Spy Class",
-  "main": "./src/js/nav-scroll-spy.js",
+  "main": "./lib/nav-scroll-spy.js",
   "author": "Vadim Petrov – github.com/komock",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "gulp-pug": "^3.2.0",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.0.1",
-    "scroll-window-to-element": "^1.0.3",
+    "scroll-window-to-element": "^1.0.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0"
