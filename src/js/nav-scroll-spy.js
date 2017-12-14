@@ -109,23 +109,41 @@ export default class NavScrollSpy {
 
 	setEvents() {
 		// Throttling to improve performance
-		let throttledDefineCurrentSection = throttle(this.defineCurrentSection, this.options.throttle).bind(this),
-			throttledGetSectionsParams = throttle(this.getSectionsParams, this.options.throttle).bind(this);
+		const throttledDefineCurrentSection = throttle(this.defineCurrentSection, this.options.throttle).bind(this)
+		const throttledGetSectionsParams = throttle(this.getSectionsParams, this.options.throttle).bind(this);
 
-		// Scroll
-		window.addEventListener('scroll', () => throttledDefineCurrentSection());
+		this.scrollThrottleHandler = () => {
+			throttledDefineCurrentSection()
+		};
 
-		// Resize
-		window.addEventListener('resize', () => {
+		this.resizeThrottleHandler = () => {
 			throttledGetSectionsParams();
 			throttledDefineCurrentSection();
-		});
+		};
+
+		// Scroll
+		window.addEventListener('scroll', this.scrollThrottleHandler);
+
+		// Resize
+		window.addEventListener('resize', this.resizeThrottleHandler);
+	}
+
+	removeEvents() {
+		// Scroll
+		window.removeEventListener('scroll', this.scrollThrottleHandler);
+
+		// Resize
+		window.removeEventListener('resize', this.resizeThrottleHandler);
 	}
 
 	init() {
 		this.getElements();
 		this.getSectionsParams();
 		this.setEvents();
+	}
+
+	destroy() {
+		this.removeEvents();
 	}
 
 }
