@@ -5,17 +5,35 @@ Simple ES6 Scroll Spy Class
 Example: [komock.github.io/nav-scroll-spy](https://komock.github.io/nav-scroll-spy)
 
 ## Install
+
+Npm
+
 ```sh
 npm i --save-dev nav-scroll-spy
 ```
+
+Yarn
+
+```sh
+yarn add nav-scroll-spy
+```
+
 ## Usage
+
+### JavaScript API
+
 ```js
 // Absolute path to module 'node_modules/nav-scroll-spy/src/js/nav-scroll-spy.js'
 import NavScrollSpy from 'nav-scroll-spy';
-let spy = new NavScrollSpy();
+const spy = new NavScrollSpy();
 spy.init();
+
+// Destroy scroll spy if needed
+spy.destroy();
 ```
-## Markup example
+
+### Markup
+
 ```html
 <nav>
 	<ul>
@@ -26,6 +44,7 @@ spy.init();
 ```
 
 ## Options
+
 | Option | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
 | offset | number | 0 | Scroll offset |
@@ -34,6 +53,7 @@ spy.init();
 | throttle | number | 100 | Throttling window events (scroll and resize) to improve performance |
 
 ## Features
+
 1. Fast and lightweight
 2. No jQuery
 3. ES6 ready
